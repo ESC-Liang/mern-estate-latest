@@ -55,8 +55,10 @@ export const getUserListing = async (res, req, next) => {
       res.status(200).json(listings);
     } catch (error) {
       next(error);
+      // 这里用的是全局的错误处理器，处理的是 客户端和服务器交互时发生的错误，错误代码500 等。这里返回的信息是浏览器产生的信息。
     }
   } else {
     return next(errorHandler(401, "You can only view your own listings"));
+    // 这里用的是额外的错误处理器，处理的是客户端没有合法权限时发生的错误，错误代码401等，并且额外返回给客户一条信息。
   }
 };
