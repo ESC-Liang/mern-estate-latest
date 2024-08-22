@@ -27,3 +27,25 @@ export const deleteListing = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateListing = async (req, res, next) => {
+  const listing = await Listing.findbyId(req.params.id);
+  // findbyId 找的是 mongodb 自动给每跟对象数据存生成的 ID
+  if (!listing) {
+    return next(errorHandler(404, "Listing not found!"));
+  }
+  if (req.user.id !== listing.userRef) {
+    // req.user.id 是 cookie 里面存的用户id；
+    return next(errorHandler(401, "You can only update your own listings!"));
+  }
+  try {
+    const updatedListing = await Listing.findbyIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.status(200).json(updatedListing);
+  } catch (error) {
+    next(error);
+  }
+};

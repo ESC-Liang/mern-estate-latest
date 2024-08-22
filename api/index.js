@@ -17,6 +17,7 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+//  mongodb 这么一连，那么里面 schema 产出的对象就时刻存在于此 project 里面了 就等于此工程里面，多了user 和 listing 两个对象。
 
 const app = express();
 
