@@ -17,12 +17,14 @@ export const userSlice = createSlice({
 
     signInSuccess: (state, action) => {
       state.currentUser = action.payload;
+      //  这时候 action.payload 就是此时 发送ajax 请求之后，服务器返回的结果。浏览器上可以看到。登录成功返回的就是用户信息。
       state.loading = false;
       state.error = null;
     },
 
     signInFailure: (state, action) => {
       state.error = action.payload;
+      // 登录不成功返回的就是错误信息。
       state.loading = false;
     },
 

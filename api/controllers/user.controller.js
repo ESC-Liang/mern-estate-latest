@@ -62,3 +62,16 @@ export const getUserListing = async (res, req, next) => {
     // 这里用的是额外的错误处理器，处理的是客户端没有合法权限时发生的错误，错误代码401等，并且额外返回给客户一条信息。
   }
 };
+
+export const getUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    // 这里的params 是到时候 由 fetch 发送 http 请求时 决定的。
+    if (!user) return next(errorHandler(404, "User not found!"));
+
+    const { password: pass, ...rest } = user._doc;
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
